@@ -12,25 +12,25 @@ jobs:
     name: Pre-built GUI Validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
       ### Check the pre-built GUI files are up-to-date
 
       - name: Set up Node JS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '16'
 
       - name: Install dependencies
         run: |
-          cd gui
+          cd gui-v2
           npm install
 
       - name: Build GUI
         run: |
-          cd gui
+          cd gui-v2
           npm run build
 
       - name: Check the pre-built GUI files are up-to-date
@@ -49,10 +49,10 @@ jobs:
 
     steps:
       ### Check the version number in the code matches the tag number
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 

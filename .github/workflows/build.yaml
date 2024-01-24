@@ -41,20 +41,22 @@ jobs:
       fail-fast: false
       matrix:
         env:
-          - openevse_nodemcu-32s
-          - openevse_esp-wrover-kit
-          - openevse_esp-wrover-kit_latest
-          - openevse_huzzah32_dev
-          - openevse_huzzah32
-          - openevse_featheresp32
+          - nodemcu-32s
+          - espressif_esp-wrover-kit
+          - espressif_esp-wrover-kit_latest
+          - adafruit_huzzah32_dev
+          - adafruit_huzzah32
+          - adafruit_featheresp32
           - openevse_wifi_v1
-          - openevse_esp32-gateway-old
-          - openevse_esp32-gateway-e
-          - openevse_esp32-gateway-f
-          - openevse_esp32-gateway-e_dev
-          - openevse_esp32-gateway-f_dev
-          - openevse_esp32-poe-iso
-          - openevse_esp32-heltec-wifi-lora-v2
+          - olimex_esp32-gateway-old
+          - olimex_esp32-gateway-e
+          - olimex_esp32-gateway-f
+          - olimex_esp32-gateway-e_dev
+          - olimex_esp32-gateway-f_dev
+          - olimex_esp32-poe-iso
+          - heltec_esp32-wifi-lora-v2
+          - wt32-eth01
+          - esp32-c3-devkitc-02
         gui:
           - name: gui-v2
             repo: OpenEVSE/openevse-gui-v2
@@ -64,10 +66,10 @@ jobs:
     steps:
     - uses: ammaraskar/gcc-problem-matcher@master
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Checkout GUI
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: ${{ matrix.gui.repo }}
         path: ${{ matrix.gui.name }}
@@ -89,7 +91,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
@@ -99,7 +101,7 @@ jobs:
         pip install --upgrade platformio
 
     - name: Set up Node JS
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '16'
 
@@ -120,7 +122,7 @@ jobs:
         PLATFORMIO_BUILD_FLAGS: ${{ matrix.gui.build_flags }}
 
     - name: Upload output to GitHub
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.env }}.bin
         path: .pio/build/${{ matrix.env }}/firmware.bin
@@ -133,7 +135,7 @@ jobs:
 
     steps:
     - name: Download the built assets
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: artifacts
 
